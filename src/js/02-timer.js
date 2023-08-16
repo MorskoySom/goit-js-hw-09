@@ -14,6 +14,7 @@ const elem = {
 let timeEnd;
 let timeNow;
 let differense;
+btn.disabled = "disabled";
 
 const options = {
     enableTime: true,
@@ -21,43 +22,55 @@ const options = {
     defaultDate: new Date(),
     minuteIncrement: 1,
     onClose(selectedDates) {
-
         console.log(selectedDates[0]);
         timeEnd = selectedDates[0].getTime();
-        timeNow = new Date().getTime();
+        timeNow = Date.now();
         differense = (convertMs(timeEnd - timeNow));
         if (timeEnd < timeNow) {
             alert("Please choose a date in the future");
         }
-        elem.days.textContent = differense.days;
-        elem.hours.textContent = differense.hours;
-        elem.minutes.textContent = differense.minutes;
-        elem.seconds.textContent = differense.seconds;
+        if (timeEnd > timeNow) {
+            btn.disabled = false;
+        }
     },
 };
+
 flatpickr(inpDate, options);
 
+btn.addEventListener(`click`, handlerClick)
 
+function updateTimer(timeDifference) {
+    elem.days.textContent = zeroToTime(timeDifference.days);
+    elem.hours.textContent = zeroToTime(timeDifference.hours);
+    elem.minutes.textContent = zeroToTime(timeDifference.minutes);
+    elem.seconds.textContent = zeroToTime(timeDifference.seconds);
+}
+
+function handlerClick() {
+    const id = setInterval(() => {
+        const remainingTime = timeEnd - Date.now();
+        updateTimer(convertMs(remainingTime));
+        if (remainingTime <= 0) {
+            clearInterval(id);
+        }
+    }, 1000)
+}
+
+function zeroToTime(value) {
+    return value.toString().padStart(2, `0`)
+}
 
 function convertMs(ms) {
-    // Number of milliseconds per unit of time
     const second = 1000;
     const minute = second * 60;
     const hour = minute * 60;
     const day = hour * 24;
-
-    // Remaining days
     const days = Math.floor(ms / day);
-    // Remaining hours
     const hours = Math.floor((ms % day) / hour);
-    // Remaining minutes
     const minutes = Math.floor(((ms % day) % hour) / minute);
-    // Remaining seconds
     const seconds = Math.floor((((ms % day) % hour) % minute) / second);
-
     return { days, hours, minutes, seconds };
 }
-
 
 
 // Notiflix.Notify.success('Sol lucet omnibus');
