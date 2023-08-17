@@ -27,7 +27,7 @@ const options = {
         timeNow = Date.now();
         differense = (convertMs(timeEnd - timeNow));
         if (timeEnd < timeNow) {
-            Notiflix.Notify.warning('Please choose a date in the future');
+            Notiflix.Notify.failure('Please choose a date in the future');
         }
         if (timeEnd > timeNow) {
             btn.disabled = false;
