@@ -27,7 +27,7 @@ const options = {
         timeNow = Date.now();
         differense = (convertMs(timeEnd - timeNow));
         if (timeEnd < timeNow) {
-            alert("Please choose a date in the future");
+            Notiflix.Notify.warning('Please choose a date in the future');
         }
         if (timeEnd > timeNow) {
             btn.disabled = false;
@@ -72,8 +72,3 @@ function convertMs(ms) {
     return { days, hours, minutes, seconds };
 }
 
-
-// Notiflix.Notify.success('Sol lucet omnibus');
-// Notiflix.Notify.failure('Qui timide rogat docet negare');
-// Notiflix.Notify.warning('Memento te hominem esse');
-// Notiflix.Notify.info('Cogito ergo sum');
