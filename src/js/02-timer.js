@@ -52,6 +52,7 @@ function handlerClick() {
         updateTimer(convertMs(remainingTime));
         if (remainingTime <= 0) {
             clearInterval(id);
+            updateTimer({ days: 0, hours: 0, minutes: 0, seconds: 0 });
         }
     }, 1000)
 }
@@ -71,4 +72,3 @@ function convertMs(ms) {
     const seconds = Math.floor((((ms % day) % hour) % minute) / second);
     return { days, hours, minutes, seconds };
 }
-
