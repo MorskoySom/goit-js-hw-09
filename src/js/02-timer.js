@@ -47,6 +47,8 @@ function updateTimer(timeDifference) {
 }
 
 function handlerClick() {
+    inpDate.disabled = "disabled";
+    btn.disabled = "disabled";
     const id = setInterval(() => {
         const remainingTime = timeEnd - Date.now();
         updateTimer(convertMs(remainingTime));
@@ -72,3 +74,5 @@ function convertMs(ms) {
     const seconds = Math.floor((((ms % day) % hour) % minute) / second);
     return { days, hours, minutes, seconds };
 }
+
+// elem.btnStart.disabled = "disabled";
